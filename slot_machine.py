@@ -1,6 +1,40 @@
+import random #import random function
+
 MAX_LINES = 3 #constant value
 MAX_BET = 100 #establishes max number of plays
 MIN_BET = 1 #establishes min number of plays
+
+ROWS = 3 
+COLS = 3 # 3x3 slot machine
+
+symbol_count = {
+    'A': 2, 'B': 4, 'C': 6, 'D': 8
+}
+
+def get_spin(rows, cols, symbols):
+    all_symbols = []
+    for symbol, symbol_count in symbols.items():
+        for _ in range(symbol_count):
+            all_symbols.append(symbol)
+
+    columns = [[], [], []]
+    for _ in range(cols):
+        column = []
+        current_symbols = all_symbols[:]
+        for _ in range(rows):
+            value = random.choice(current_symbols)
+            current_symbols.remove(value)
+            column.append(value)
+        columns.append(column)
+    return columns
+
+def print_slot_machine(columns): #prints columns and rows to spin
+    for row in range(len(columns[0])):
+        for i, column in enumerate(columns):
+            if i != len(columns) - 1:
+                print(column[row], '|')
+            else:
+                print(column[row])
 
 def deposit(): #user input
     while True:
@@ -51,5 +85,9 @@ def main():
             print(f'You do not have enough to bet that amount, current balance is: ${balance}')
         else:
             break
-    print(f'You are betting ${bet} on {lines}. Total bet is equal to: ${total_bet}')
+    print(f'You are betting ${bet} on {lines} lines. Total bet is equal to: ${total_bet}')
+    slots = get_spin(ROWS, COLS, symbol_count) #colums to spin
+    print_slot_machine(slots)
+
+
 main()
