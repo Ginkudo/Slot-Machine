@@ -11,6 +11,22 @@ symbol_count = {
     'A': 2, 'B': 4, 'C': 6, 'D': 8
 }
 
+symbol_value = {
+    'A': 5, 'B': 4, 'C': 3, 'D': 2
+}
+
+def check_winnings(columns, lines, bet, values):
+    winnings = 0
+    for line in range(lines):
+        symbol = columns[0][line]
+        for column in columns:
+            check_symbol = column[line]
+            if symbol != check_symbol:
+                break
+        else:
+            winnings += values[symbol] * bet
+    return winnings
+
 def get_spin(rows, cols, symbols):
     all_symbols = []
     for symbol, symbol_count in symbols.items():
